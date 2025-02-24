@@ -1,0 +1,1 @@
+$AMBERHOME/bin/mm_pbsa.pl reswise.in > reswise.log

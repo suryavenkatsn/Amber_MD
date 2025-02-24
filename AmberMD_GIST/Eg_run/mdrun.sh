@@ -1,0 +1,1 @@
+$AMBERHOME/bin/pmemd.cuda -O -i md-nvt-30ns.in -o md-nvt-30ns.out -p fxa.prmtop -c md_eq-nvt.rst7 -r final-prod.rst7 -x prod_30ns.nc -ref md_eq-nvt.rst7

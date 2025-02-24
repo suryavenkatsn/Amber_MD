@@ -1,0 +1,15 @@
+#!/bin/sh
+#PBS -N rasraf_parallel
+#PBS -o parallel.out
+#PBS -e parallel.err
+#PBS -m abe
+#PBS -M email@address.com
+#PBS -q brute
+#PBS -l nodes=1:surg:ppn=4
+#PBS -l pmem=900mb
+
+cd $PBS_O_WORKDIR
+
+mpirun -np 4 MMPBSA.py.MPI -O -i mmpbsa.in -o FINAL_RESULTS_MMPBSA.dat -sp ras-raf_solvated.prmtop \
+             -cp ras-raf.prmtop -rp ras.prmtop -lp raf.prmtop -y bigprod.mdcrd > progress.log 2>&1
+

@@ -1,0 +1,37 @@
+export CUDA_VISIBLE_DEVICES=0         # [0,1,2,3]
+
+# Protein preparation
+$AMBERHOME/bin/./tleap -f /opt/amber18/dat/leap/cmd/oldff/leaprc.ff99SB
+source /opt/amber18/dat/leap/cmd/leaprc.gaff
+pro = loadpdb 7bv2_prep_5.pdb
+saveamberparm pro rec.prmtop rec.inpcrd
+savepdb  pro rec.pdb
+quit
+
+
+# Apo Minimization
+sh ./int.sh &
+
+# Converting rst to pdb
+$AMBERHOME/bin/./ambpdb -p apo.prmtop -c apomin.rst > apomin.pdb
+
+# Solvation and Adding Ions
+$AMBERHOME/bin/./tleap -f /opt/amber18/dat/leap/cmd/oldff/leaprc.ff99SB
+source /opt/amber18/dat/leap/cmd/leaprc.gaff
+apo = loadpdb apomin.pdb
+solvatebox apo TIP3PBOX 10.0
+charge apo
+addIons apo Na+ 0
+saveamberparm apo apo-sol1.prmtop apo-sol1.inpcrd
+savepdb apo apo-sol1.pdb
+quit
+
+# Final simulation
+sh ./fin.sh &
+
+# nc to mdcrd
+cpptraj apo-sol1.prmtop <<EOF
+trajin prod1.nc 0 10000000 1
+reference apo-sol1.inpcrd
+trajout prod1.mdcrd
+EOF

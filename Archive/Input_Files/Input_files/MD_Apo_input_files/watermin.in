@@ -1,0 +1,14 @@
+Minimize all hydrogens
+ &cntrl
+  imin   = 1,
+  maxcyc = 5000,   
+  ncyc = 500,
+  ntr    = 1,
+  ntb    = 1, 
+  cut   = 10.0,
+/
+Keep protein fixed
+10.0
+RES 1 570
+END
+END

@@ -1,0 +1,25 @@
+
+cpptraj com-sol1.prmtop <<EOF
+trajin prod-all.nc 0 10000 10
+reference equil1.rst
+center :1-528
+distance dist :481@OD1 :528@H44 reference out dist.agr geom noimage type noe bound 481 bound 528
+EOF
+
+
+
+
+UNK528@H44
+ASP481@OD1
+
+cpptraj com-sol1.prmtop <<EOF
+trajin prod-all.nc 0 10000 10
+reference equil1.rst
+center :1-528
+distance dist :481@OD2 :528@H44 reference out dist_2.agr geom noimage type noe bound 481 bound 528
+EOF
+
+
+
+
+

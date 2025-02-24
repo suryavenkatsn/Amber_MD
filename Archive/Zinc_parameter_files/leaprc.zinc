@@ -1,0 +1,9 @@
+logFile leap.log
+#
+# loading force field parameters for the tetrahedraon-shaped zinc divalent cation
+#
+addAtomTypes { { "DZ" "Zn" "sp3" } { "Zn" "Zn" "sp3" } }
+loadOff znb.lib
+loadOff hin.lib
+loadOff hydroxide.lib
+loadamberparams frcmod.zinc

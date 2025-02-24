@@ -1,0 +1,2 @@
+#!/bin/sh
+$AMBERHOME/bin/MMPBSA.py -O -i mmpbsa_alascan.in -o FINAL_RESULTS_MMPBSA.dat -do FINAL_DECOMP_MMPBSA.dat -sp com-sol1.prmtop -cp com.prmtop -rp rec.prmtop -lp UNK.prmtop -y *.mdcrd -mc com_mutant.prmtop -mr rec_mutant.prmtop

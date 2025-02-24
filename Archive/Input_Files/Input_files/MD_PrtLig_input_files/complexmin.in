@@ -1,0 +1,12 @@
+Minimize water positions (and all hydrogens)
+ &cntrl
+  imin   = 1,
+  maxcyc = 1000,
+  ncyc = 500,
+  ntr = 1,
+  ntb = 0,cut=16.0,
+/
+END
+
+
+

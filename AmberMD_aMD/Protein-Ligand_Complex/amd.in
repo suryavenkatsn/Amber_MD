@@ -1,0 +1,15 @@
+500 ns aMD production
+NPT
+ &cntrl
+  imin=0, irest=1, ntx=5,
+  nstlim=250000000, dt=0.002,
+  ntc=2, ntf=2, ig=-1,
+  cut=10.0, ntb=2, ntp=1,
+  ntpr=1000, ntwx=10000, ntwr=10000,
+  ntt=3, gamma_ln=1.0,
+  saltcon=0.15,nscm=1000,
+  temp0=300.0, ioutfm=1, iwrap=1,
+  iamd=3,
+  ethreshd=7073.8, alphad=389.6,
+  ethreshp=-245001.6, alphap=12780.5,
+ /

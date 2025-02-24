@@ -1,0 +1,14 @@
+Minimize drug coords (drug is resid ) and xtal water
+ &cntrl
+  imin = 1,
+  maxcyc = 1000,
+  ncyc = 500,
+  ntr = 1,
+  ntb = 0,
+  cut = 16.0,
+/
+Keep protein fixed
+10.0
+RES 1 486
+END
+END

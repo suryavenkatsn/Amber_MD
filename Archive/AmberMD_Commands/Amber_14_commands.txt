@@ -1,0 +1,73 @@
+$AMBERHOME/bin/./antechamber -i BWC2150_2.mol2 -fi mol2 -o BWC2150_2-ac.mol2 -fo mol2 -nc 1 -c bcc
+
+
+$AMBERHOME/bin/./parmchk -i BWC2150_2-ac.mol2 -f mol2 -o frcmod.UNK
+
+
+$AMBERHOME/bin/./tleap -f /opt/amber14/dat/leap/cmd/oldff/leaprc.ff99SB
+source /opt/amber14/dat/leap/cmd/oldff/leaprc.ff99SB
+source /opt/amber14/dat/leap/cmd/leaprc.gaff
+UNK = loadmol2 BWC2150_2-ac.mol2
+check UNK
+loadamberparams frcmod.UNK
+saveoff UNK UNK.lib
+saveamberparm UNK UNK.prmtop UNK.inpcrd
+savepdb UNK UNKlig.pdb
+quit
+
+$AMBERHOME/bin/./tleap -f /opt/amber14/dat/leap/cmd/oldff/leaprc.ff99SB
+source /opt/amber14/dat/leap/cmd/oldff/leaprc.ff99SB
+source /opt/amber14/dat/leap/cmd/leaprc.gaff
+pro = loadpdb 7bv2_prep_5.pdb 
+saveamberparm pro rec.prmtop rec.inpcrd
+savepdb  pro rec.pdb
+quit
+
+$AMBERHOME/bin/./tleap -f /opt/amber14/dat/leap/cmd/oldff/leaprc.ff99SB
+source /opt/amber14/dat/leap/cmd/oldff/leaprc.ff99SB
+source /opt/amber14/dat/leap/cmd/leaprc.gaff
+loadamberparams frcmod.UNK
+loadoff UNK.lib
+complex = loadpdb complex.pdb
+saveamberparm  complex com.prmtop com.inpcrd
+savepdb complex com.pdb
+quit
+
+		$AMBERHOME/bin/./tleap -f /scratch1/leaprc.ff99SB
+		source /scratch1/leaprc.ff99SB
+		source /opt/amber14/dat/leap/cmd/leaprc.gaff
+		loadamberparams frcmod.UNK
+		loadoff UNK.lib
+		complex = loadpdb comp.pdb
+		saveamberparm  complex com.prmtop com.inpcrd
+		savepdb complex com.pdb
+		quit
+
+$AMBERHOME/bin/./ambpdb -p com.prmtop < complexmin.rst > complexmin.pdb
+
+$AMBERHOME/bin/./tleap -f /opt/amber14/dat/leap/cmd/oldff/leaprc.ff99SB
+source /opt/amber14/dat/leap/cmd/oldff/leaprc.ff99SB
+source /opt/amber14/dat/leap/cmd/leaprc.gaff
+loadamberparams frcmod.UNK
+loadoff UNK.lib
+complex = loadpdb complexmin.pdb
+solvatebox complex TIP3PBOX 10.0
+charge complex
+addIons complex Na+ 0
+saveamberparm complex com-sol1.prmtop com-sol1.inpcrd
+savepdb complex com-sol1.pdb
+quit
+
+cpptraj com-sol1.prmtop <<EOF
+trajin prod1.nc 0 50000 5
+reference com-sol1.inpcrd
+center :1-1394
+autoimage
+closest 10 :1394 first
+rms reference out protienrms :1-1394,@CA,C,N,O
+rms reference out ligrms1-min :1394 nofit
+strip :Na+
+strip :Cl-
+strip :MG2
+trajout Gep-GyrA-WT.pdb pdb noappend
+EOF

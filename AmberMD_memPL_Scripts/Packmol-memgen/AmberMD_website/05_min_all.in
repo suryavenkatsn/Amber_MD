@@ -1,0 +1,10 @@
+Fifth minimization minimization of all components without restraints
+ &cntrl
+  nmropt = 0,
+
+  imin = 1,
+
+  maxcyc = 10000,
+  ncyc = 5000,
+ &end
+

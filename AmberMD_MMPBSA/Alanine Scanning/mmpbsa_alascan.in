@@ -1,0 +1,13 @@
+sample input file for running alanine scanning
+ &general
+   startframe=1, endframe=50, interval=1,
+   verbose=1, 
+/
+&gb
+  saltcon=0.1
+/
+&pb
+  istrng=0.100
+/
+&alanine_scanning
+/

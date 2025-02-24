@@ -1,0 +1,20 @@
+parm step5_input.parm7  
+trajin prod1/output.xtc 1 250 1  
+
+# Remove unwanted molecules  
+strip :SOD,CLA,TIP3,TIP,POPC  
+autoimage  
+
+# Calculate RMSD alignment (optional)  
+rms first @CA  
+
+# Calculate three distances  
+distance D1 :1088@CA :1370@CA  
+distance D2 :1116@CA :1157@CA  
+distance D3 :1162@CA :1189@CA  
+
+# Execute calculations  
+go  
+
+# Write results to a file  
+writedata distances.dat D1 D2 D3  

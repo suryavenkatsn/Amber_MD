@@ -1,0 +1,2 @@
+#!/bin/sh
+$AMBERHOME/bin/MMPBSA.py -O -i mmpbsa_per_res_decomp_gb.in -o FINAL_RESULTS_MMPBSA.dat -do FINAL_DECOMP_MMPBSA.dat -sp com-sol1.prmtop -cp com.prmtop -rp rec.prmtop -lp UNK.prmtop -y prod-all.mdcrd

@@ -1,0 +1,8 @@
+parm com-sol1.prmtop
+trajin prod_amd.nc
+reference equil.rst
+center mass origin @CA
+rms reference @CA out c-alpha-rmsd.agr
+rms reference out lig-rmsd.agr :UNK nofit
+atomicfluct out rmsf.agr @C,CA,N byres
+radgyr @CA & !(@H=) out RoG.agr mass nomax

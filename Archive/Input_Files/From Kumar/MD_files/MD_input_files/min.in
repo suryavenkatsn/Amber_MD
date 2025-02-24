@@ -1,0 +1,12 @@
+Unrestrained mimization, periodic system, xmin default
+ &cntrl
+  imin   = 1,
+  ntmin = 1,
+  maxcyc = 5000,
+  ncyc = 500,
+  ntb = 1,cut=10.0,
+/
+END
+END
+
+

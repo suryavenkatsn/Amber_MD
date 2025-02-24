@@ -1,0 +1,1 @@
+sem -j +0 packmol-memgen --pdb complexmin.pdb --lipids POPE:POPE --ratio 1:1 --keepligs --salt --dist 10 --dist_wat 15 --notprotonate --nottrim

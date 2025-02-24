@@ -1,0 +1,4 @@
+trajin mdcrd
+center mass origin @CA
+image center origin familiar
+trajout image.nc netcdf

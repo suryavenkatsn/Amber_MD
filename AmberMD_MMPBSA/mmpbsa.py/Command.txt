@@ -1,0 +1,1 @@
+$AMBERHOME/bin/MMPBSA.py -O -i mmpbsa.in -o FINAL_RESULTS_MMPBSA.dat -do FINAL_DECOMP_MMPBSA.dat -sp ras-raf_solvated.prmtop -cp ras-raf.prmtop -rp ras.prmtop -lp raf.prmtop -y *.mdcrd

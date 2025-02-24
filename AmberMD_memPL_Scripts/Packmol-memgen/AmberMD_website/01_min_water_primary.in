@@ -1,0 +1,14 @@
+Initial minimization of water with harmonic restraints on the rest (25 kcal/molA2)
+ &cntrl
+  nmropt = 0,
+
+  imin = 1,
+
+  ntr = 1,
+  restraint_wt = 25,
+  restraintmask = ':PROTEIN+LIPID',
+
+  maxcyc = 10000,
+  ncyc = 5000,
+ &end
+

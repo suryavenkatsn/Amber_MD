@@ -1,0 +1,35 @@
+cp leaprc.zinc $AMBERHOME/dat/leap/cmd
+cp znb.lib hin.lib hydroxide.lib $AMBERHOME/dat/leap/lib 
+cp frcmod.zinc $AMBERHOME/dat/leap/parm
+
+			# steps from Mayo clinic website
+			Launch xLeap by typing the following command in the c shell of X11:
+			$AMBERHOME/exe/xleap –s –f $AMBERHOME/dat/leap/cmd/leaprc.ff99SB
+
+			Type the following commands in xLeap:
+			source $AMBERHOME/dat/leap/cmd/leaprc.zinc
+			m = loadpdb revised_zinc.pdb
+			addions m counterion 0
+			solvatebox m TIP3PBOX 10.0
+			saveamberparm m prmtop prmcrd
+
+# Modified commands
+# Protein preparation
+$AMBERHOME/bin/./tleap -f /opt/amber18/dat/leap/cmd/oldff/leaprc.ff99SB
+source /opt/amber18/dat/leap/cmd/leaprc.zinc
+pro = loadpdb 7bv2_prep_5.pdb
+saveamberparm pro rec.prmtop rec.inpcrdcom
+savepdb  pro rec.pdb
+quit
+
+
+# Complex Preparation
+$AMBERHOME/bin/./tleap -f /opt/amber18/dat/leap/cmd/oldff/leaprc.ff99SB
+source /opt/amber18/dat/leap/cmd/leaprc.zinc
+source /opt/amber18/dat/leap/cmd/leaprc.gaff
+loadamberparams frcmod.UNK
+loadoff UNK.lib
+complex = loadpdb complex.pdb
+saveamberparm  complex com.prmtop com.inpcrd
+savepdb complex com.pdb
+quit
