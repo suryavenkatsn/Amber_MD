@@ -276,6 +276,7 @@ $AMBERHOME/bin/./ambpdb -p com.prmtop -c complexmin.rst > complexmin.pdb
 echo "source" $AMBERHOME"/dat/leap/cmd/oldff/leaprc.ff14SB" >> solv_c.in
 echo "source" $AMBERHOME"/dat/leap/cmd/leaprc.zinc" >> solv_c.in
 echo "source" $AMBERHOME"/dat/leap/cmd/leaprc.gaff" >> solv_c.in
+echo "source" $AMBERHOME"/dat/leap/cmd/leaprc.water.tip3p" >> solv_c.in
 echo "loadamberparams ./UNK_$ligand/frcmod.UNK" >> solv_c.in
 echo "loadoff ./UNK_$ligand/UNK.lib" >> solv_c.in
 echo "complex = loadpdb complexmin.pdb" >> solv_c.in
@@ -316,6 +317,7 @@ $AMBERHOME/bin/./ambpdb -p com.prmtop -c complexmin.rst > complexmin.pdb
 echo "source" $AMBERHOME"/dat/leap/cmd/oldff/leaprc.ff14SB" >> solv.in
 echo "source" $AMBERHOME"/dat/leap/cmd/leaprc.zinc" >> solv.in
 echo "source" $AMBERHOME"/dat/leap/cmd/leaprc.gaff" >> solv.in
+echo "source" $AMBERHOME"/dat/leap/cmd/leaprc.water.tip3p" >> solv.in
 echo "loadamberparams ./UNK_$ligand/frcmod.UNK" >> solv.in
 echo "loadoff ./UNK_$ligand/UNK.lib" >> solv.in
 echo "complex = loadpdb complexmin.pdb" >> solv.in
