@@ -42,9 +42,10 @@ antechamber -i ../$ligand.mol2 -fi mol2 -o $ligand-ac.mol2 -fo mol2 -nc $charge 
 
 $AMBERHOME/bin/./parmchk2 -i $ligand-ac.mol2 -f mol2 -o frcmod.UNK;
 
+rm -f ligprp_$ligand.in ligprp_$ligand.out
 
-printf "source" $AMBERHOME"/dat/leap/cmd/oldff/leaprc.ff99SB
-source" $AMBERHOME"/dat/leap/cmd/leaprc.gaff
+printf "source $AMBERHOME/dat/leap/cmd/oldff/leaprc.ff99SB
+source $AMBERHOME/dat/leap/cmd/leaprc.gaff
 UNK = loadmol2 $ligand-ac.mol2
 check UNK
 loadamberparams frcmod.UNK
