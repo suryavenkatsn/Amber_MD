@@ -37,7 +37,6 @@ if [ ! -f drug.in ] && [ ! -f complexmin.in ];then
 	exit
 fi
 
-
 sander -O -i drug.in -o drug.out -p com.prmtop -c com.inpcrd -r drug.rst -x drug.mdcrd -ref com.inpcrd
 sander -O -i complexmin.in -o complexmin.out -p com.prmtop -c drug.rst -r complexmin.rst -x complexmin.mdcrd -ref drug.rst
 
@@ -58,20 +57,19 @@ fi
 
 $AMBERHOME/bin/./ambpdb -p com.prmtop -c complexmin.rst > complexmin.pdb
 
-echo "source" $AMBERHOME"/dat/leap/cmd/oldff/leaprc.ff99SB" >> solv_c.in
-echo "source" $AMBERHOME"/dat/leap/cmd/leaprc.zinc" >> solv_c.in
-echo "source" $AMBERHOME"/dat/leap/cmd/leaprc.gaff" >> solv_c.in
-echo "loadamberparams ./UNK_$ligand/frcmod.UNK" >> solv_c.in
-echo "loadoff ./UNK_$ligand/UNK.lib" >> solv_c.in
-echo "loadamberparams ./UNK_$ligand2/frcmod.UNK" >> solv_c.in
-echo "loadoff ./UNK_$ligand2/UNK.lib" >> solv_c.in
-echo "complex = loadpdb complexmin.pdb" >> solv_c.in
-echo "solvatebox complex TIP3PBOX 10.0" >> solv_c.in
-echo "charge complex" >> solv_c.in
-echo "quit" >> solv_c.in
+printf "source $AMBERHOME/dat/leap/cmd/oldff/leaprc.ff99SB
+source $AMBERHOME/dat/leap/cmd/leaprc.zinc
+source $AMBERHOME/dat/leap/cmd/leaprc.gaff
+loadamberparams ./UNK_$ligand/frcmod.UNK
+loadoff ./UNK_$ligand/UNK.lib
+loadamberparams ./UNK_$ligand2/frcmod.UNK
+loadoff ./UNK_$ligand2/UNK.lib
+complex = loadpdb complexmin.pdb
+solvatebox complex TIP3PBOX 10.0
+charge complex
+quit" >> solv_c.in
 
 tleap -f solv_c.in > solv_charge.out
-
 
 charge=$(awk '/Total unperturbed charge/ { print $4;exit; }' leap.log);
 vol=$(awk '/Volume/ { print $2;exit; }' leap.log);
@@ -98,24 +96,23 @@ if [ -f complexmin.pdb ];then
         rm complexmin.pdb;
 fi
 
-
 $AMBERHOME/bin/./ambpdb -p com.prmtop -c complexmin.rst > complexmin.pdb
 
-echo "source" $AMBERHOME"/dat/leap/cmd/oldff/leaprc.ff99SB" >> solv.in
-echo "source" $AMBERHOME"/dat/leap/cmd/leaprc.zinc" >> solv.in
-echo "source" $AMBERHOME"/dat/leap/cmd/leaprc.gaff" >> solv.in
-echo "loadamberparams ./UNK_$ligand/frcmod.UNK" >> solv.in
-echo "loadoff ./UNK_$ligand/UNK.lib" >> solv.in
-echo "loadamberparams ./UNK_$ligand2/frcmod.UNK" >> solv.in
-echo "loadoff ./UNK_$ligand2/UNK.lib" >> solv.in
-echo "complex = loadpdb complexmin.pdb" >> solv.in
-echo "solvatebox complex TIP3PBOX 10.0" >> solv.in
-echo "charge complex" >> solv.in
-echo "addIons complex $ion 0" >> solv.in
-echo "addIonsRand complex Na+ $nacl Cl- $nacl" >> solv.in
-echo "saveamberparm complex com-sol1.prmtop com-sol1.inpcrd" >> solv.in
-echo "savepdb complex com-sol1.pdb" >> solv.in
-echo "quit" >> solv.in
+printf "source $AMBERHOME/dat/leap/cmd/oldff/leaprc.ff99SB
+source $AMBERHOME/dat/leap/cmd/leaprc.zinc
+source $AMBERHOME/dat/leap/cmd/leaprc.gaff
+loadamberparams ./UNK_$ligand/frcmod.UNK
+loadoff ./UNK_$ligand/UNK.lib
+loadamberparams ./UNK_$ligand2/frcmod.UNK
+loadoff ./UNK_$ligand2/UNK.lib
+complex = loadpdb complexmin.pdb
+solvatebox complex TIP3PBOX 10.0
+charge complex
+addIons complex $ion 0
+addIonsRand complex Na+ $nacl Cl- $nacl
+saveamberparm complex com-sol1.prmtop com-sol1.inpcrd
+savepdb complex com-sol1.pdb
+quit" >> solv.in
 
 tleap -f solv.in > solv.out
 
