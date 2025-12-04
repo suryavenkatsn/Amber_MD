@@ -22,6 +22,69 @@ fi
 ligand=$(echo "$2" | awk -F '[.]' '{ print $1 }')
 ligand2=$(echo "$3" | awk -F '[.]' '{ print $1 }')
 
+# Input files generation for ligand and complex minimization
+
+
+recstart=1
+recend=$(tail -3 rec.pdb | awk '{print $5}')
+
+
+echo "----------------------INPUTS----------------------";
+echo "Protein Start: $recstart ";
+echo "Protein End: $recend ";
+echo "--------------------------------------------------";
+echo "---------------INPUT FILES CREATED--------------- ";
+
+if [ -f drug.in ];then
+        rm drug.in;
+fi
+
+if [ -f complexmin.in ];then
+        rm complexmin.in;
+fi
+
+# Input file for Ligand Minimization
+printf "Minimize drug coords and xtal water
+ &cntrl
+  imin = 1,
+  maxcyc = 1000,
+  ncyc = 500,
+  ntr = 1,
+  ntb = 0,
+  cut = 16.0,
+/
+Keep protein fixed
+10.0
+RES $recstart $recend
+END
+END" >> drug.in;
+
+if [ -f "drug.in" ];then
+        echo "drug.in - Done"
+else
+        echo "drug.in - Not Done"
+fi
+
+
+# Input file for Complex Minimization
+
+printf "Minimize water positions (and all hydrogens)
+ &cntrl
+  imin = 1,
+  maxcyc = 1000,
+  ncyc = 500,
+  ntr = 1,
+  ntb = 0,cut=16.0,
+/
+END" >> complexmin.in;
+
+if [ -f "complexmin.in" ];then
+        echo "complexmin.in - Done"
+else
+        echo "complexmin.in - Not Done"
+fi
+
+
 echo "";
 echo "--------------------------------------------------";
 echo "Name of the Protein: $1 ";
@@ -42,18 +105,8 @@ sander -O -i complexmin.in -o complexmin.out -p com.prmtop -c drug.rst -r comple
 
 # Estimation of charge and volume of system
 
+rm -f solv_c.in solv_charge.out complexmin.pdb
 
-if [ -f solv_c.in ];then
-	rm solv_c.in;
-fi 
-
-if [ -f solv_charge.out ];then
-	rm solv_charge.out;
-fi 
-
-if [ -f complexmin.pdb ];then
-	rm complexmin.pdb;
-fi
 
 $AMBERHOME/bin/./ambpdb -p com.prmtop -c complexmin.rst > complexmin.pdb
 
@@ -83,18 +136,7 @@ python3 sc_calcs.py -v $vol >> sc.txt
 ion=$(tail -1 ions.txt)
 nacl=$(tail -1 sc.txt)
 
-# Solvation of the System
-if [ -f solv.in ];then
-        rm solv.in;
-fi
-
-if [ -f solv.out ];then
-        rm solv.out;
-fi
-
-if [ -f complexmin.pdb ];then
-        rm complexmin.pdb;
-fi
+rm -f solv.in solv.out complexmin.pdb
 
 $AMBERHOME/bin/./ambpdb -p com.prmtop -c complexmin.rst > complexmin.pdb
 

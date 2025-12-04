@@ -3,9 +3,9 @@ if [ ! -n "$1" ];then
     echo ""
     echo "This script will model the input protein and ligand in a solvated sytem for MD"
     echo ""
-    echo "Usage: $0 <protein name> <ligand name>"
+    echo "Usage: $0 <protein name>"
     echo ""
-    echo "Example: $0 3tyv.pdb UNK.mol2"
+    echo "Example: $0 3tyv.pdb"
     echo ""
     exit
 fi
@@ -19,13 +19,6 @@ if [ $ver -lt 30 ];then
 	exit
 fi
 
-ligand=$(echo "$2" | awk -F '[.]' '{ print $1 }')
-
-echo "";
-echo "--------------------------------------------------";
-echo "Name of the Protein: $1 ";
-echo "Name of the Ligand: $ligand.mol2 ";
-echo "--------------------------------------------------";
 
 # Protein Preparation
 

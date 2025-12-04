@@ -40,6 +40,7 @@ done;
 
 cat rec.pdb | sed '/END/d' > rec1.pdb;
 cat rec1.pdb UNKlig_comp.pdb >> complex.pdb;
+echo "END" >> complex.pdb;
 rm rec1.pdb
 rm UNKlig_comp.pdb
 
@@ -67,63 +68,63 @@ echo "**************************************************";
 
 # Input files generation for ligand and complex minimization
 
-lignum=$(awk '/UNK/ { print $5;exit; }' com.pdb);
-recstart=1
-recend=$((lignum - 1))
+# lignum=$(awk '/UNK/ { print $5;exit; }' com.pdb);
+# recstart=1
+# recend=$((lignum - 1))
 
 
-echo "----------------------INPUTS----------------------";
-echo "Protein Start: $recstart ";
-echo "Protein End: $recend ";
-echo "Ligand No.: $lignum ";
-echo "--------------------------------------------------";
-echo "---------------INPUT FILES CREATED--------------- ";
+# echo "----------------------INPUTS----------------------";
+# echo "Protein Start: $recstart ";
+# echo "Protein End: $recend ";
+# echo "Ligand No.: $lignum ";
+# echo "--------------------------------------------------";
+# echo "---------------INPUT FILES CREATED--------------- ";
 
-if [ -f drug.in ];then
-        rm drug.in;
-fi
+# if [ -f drug.in ];then
+#         rm drug.in;
+# fi
 
-if [ -f complexmin.in ];then
-        rm complexmin.in;
-fi
+# if [ -f complexmin.in ];then
+#         rm complexmin.in;
+# fi
 
-# Input file for Ligand Minimization
-printf "Minimize drug coords (drug is resid $ligstart) and xtal water
- &cntrl
-  imin = 1,
-  maxcyc = 1000,
-  ncyc = 500,
-  ntr = 1,
-  ntb = 0,
-  cut = 16.0,
-/
-Keep protein fixed
-10.0
-RES $recstart $recend
-END
-END" >> drug.in;
+# # Input file for Ligand Minimization
+# printf "Minimize drug coords (drug is resid $ligstart) and xtal water
+#  &cntrl
+#   imin = 1,
+#   maxcyc = 1000,
+#   ncyc = 500,
+#   ntr = 1,
+#   ntb = 0,
+#   cut = 16.0,
+# /
+# Keep protein fixed
+# 10.0
+# RES $recstart $recend
+# END
+# END" >> drug.in;
 
-if [ -f "drug.in" ];then
-        echo "drug.in - Done"
-else
-        echo "drug.in - Not Done"
-fi
+# if [ -f "drug.in" ];then
+#         echo "drug.in - Done"
+# else
+#         echo "drug.in - Not Done"
+# fi
 
 
-# Input file for Complex Minimization
+# # Input file for Complex Minimization
 
-printf "Minimize water positions (and all hydrogens)
- &cntrl
-  imin = 1,
-  maxcyc = 1000,
-  ncyc = 500,
-  ntr = 1,
-  ntb = 0,cut=16.0,
-/
-END" >> complexmin.in;
+# printf "Minimize water positions (and all hydrogens)
+#  &cntrl
+#   imin = 1,
+#   maxcyc = 1000,
+#   ncyc = 500,
+#   ntr = 1,
+#   ntb = 0,cut=16.0,
+# /
+# END" >> complexmin.in;
 
-if [ -f "complexmin.in" ];then
-        echo "complexmin.in - Done"
-else
-        echo "complexmin.in - Not Done"
-fi
+# if [ -f "complexmin.in" ];then
+#         echo "complexmin.in - Done"
+# else
+#         echo "complexmin.in - Not Done"
+# fi
