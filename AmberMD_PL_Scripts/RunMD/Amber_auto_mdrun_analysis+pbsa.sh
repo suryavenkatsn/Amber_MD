@@ -28,233 +28,154 @@ echo "Ligand number: $lignum";
 echo "Time period in nanoseconds (ns): $1";
 echo "Calculated Time Step for $1 ns = $ts";
 echo "***************************************************";
-echo "----------------INPUT FILES CREATED----------------";
+echo "INPUT FILES CREATED...!!!";
+
+rm -f watermin.in heat.in heat1.in densi.in equil.in equil1.in prod.in min.in
 
 # Input file for Water Minimization
 
-if [ -f watermin.in ];then
-        rm watermin.in
-fi
-
-echo "Minimize all hydrogens" >> watermin.in;
-echo " &cntrl" >> watermin.in;
-echo "  imin = 1," >> watermin.in;
-echo "  maxcyc = 5000," >> watermin.in;
-echo "  ncyc = 500," >> watermin.in;
-echo "  ntr = 1," >> watermin.in;
-echo "  cut = 10.0," >> watermin.in;
-echo "  saltcon=0.15," >> watermin.in;
-echo "/" >> watermin.in;
-echo "Keep protein and ligand fixed" >> watermin.in;
-echo "10.0" >> watermin.in;
-echo "RES $recstart $lignum" >> watermin.in;
-echo "END" >> watermin.in;
-echo "END" >> watermin.in;
-
-if [ -f "watermin.in" ];then
-        echo "watermin.in - Done"
-else
-        echo "watermin.in - Not Done"
-fi
+printf "Minimize all hydrogens
+ &cntrl
+  imin = 1,
+  maxcyc = 5000,
+  ncyc = 500,
+  ntr = 1,
+  cut = 10.0,
+  saltcon=0.15,
+/
+Keep protein and ligand fixed
+10.0
+RES $recstart $lignum
+END
+END" >> watermin.in;
 
 # Input file for Overall Minimization
 
-if [ -f min.in ];then
-        rm min.in
-fi
-
-echo "Unrestrained minimization, periodic system, xmin default" >> min.in;
-echo " &cntrl" >> min.in;
-echo "  imin = 1," >> min.in;
-echo "  ntmin = 1," >> min.in;
-echo "  maxcyc = 5000," >> min.in;
-echo "  ncyc = 500," >> min.in;
-echo "  ntb = 1,cut=10.0," >> min.in;
-echo "  saltcon=0.15," >> min.in;
-echo "/" >> min.in;
-echo "END" >> min.in;
-echo "END" >> min.in;
-
-if [ -f "min.in" ];then
-        echo "min.in - Done"
-else
-        echo "min.in - Not Done"
-fi
+printf "Unrestrained minimization, periodic system, xmin default
+ &cntrl
+  imin = 1,
+  ntmin = 1,
+  maxcyc = 5000,
+  ncyc = 500,
+  ntb = 1,cut=10.0,
+  saltcon=0.15,
+/
+END
+END" >> min.in;
 
 
 # Input file for Temperature Equilibration
 
-if [ -f heat.in ];then
-        rm heat.in
-fi
+printf "heat
+ &cntrl
+  imin=0,irest=0,ntx=1,
+  nstlim=100000,dt=0.002,
+  ntc=2,ntf=2,
+  ntt=3, gamma_ln = 0.2, ig = -1,
+  cut=10.0, ntb=1,ntr=1,
+  ntpr=5000, ntwx=5000,
+  ntwr=20000,
+  saltcon=0.15,
+  tempi=0.0, temp0=150.0,
+/
+Keep protein and ligand fixed
+5.0
+RES $recstart $lignum
+END
+END" >> heat.in;
 
-echo "heat" >> heat.in;
-echo " &cntrl" >> heat.in;
-echo "  imin=0,irest=0,ntx=1," >> heat.in;
-echo "  nstlim=100000,dt=0.002," >> heat.in;
-echo "  ntc=2,ntf=2," >> heat.in;
-echo "  ntt=3, gamma_ln = 0.2, ig = -1," >> heat.in;
-echo "  cut=10.0, ntb=1,ntr=1," >> heat.in;
-echo "  ntpr=5000, ntwx=5000," >> heat.in;
-echo "  ntwr=20000," >> heat.in;
-echo "  saltcon=0.15," >> heat.in;
-echo "  tempi=0.0, temp0=150.0," >> heat.in;
-echo "/" >> heat.in;
-echo "Keep protein and ligand fixed" >> heat.in;
-echo "5.0" >> heat.in;
-echo "RES $recstart $lignum" >> heat.in;
-echo "END" >> heat.in;
-echo "END" >> heat.in;
-
-if [ -f "heat.in" ];then
-        echo "heat.in - Done"
-else
-        echo "heat.in - Not Done"
-fi
 
 # Input file for second stage of Temperature Equilibration
 
-if [ -f heat1.in ];then
-        rm heat1.in
-fi
-
-echo "heat" >> heat1.in;
-echo " &cntrl" >> heat1.in;
-echo "  imin=0,irest=1,ntx=5," >> heat1.in;
-echo "  nstlim=100000,dt=0.002," >> heat1.in;
-echo "  ntc=2,ntf=2," >> heat1.in;
-echo "  ntt=3, gamma_ln = 0.2, ig = -1," >> heat1.in;
-echo "  cut=10.0, ntb=1,ntr=1," >> heat1.in;
-echo "  ntpr=5000, ntwx=5000," >> heat1.in;
-echo "  ntwr=20000," >> heat1.in;
-echo "  saltcon=0.15," >> heat1.in;
-echo "  tempi=150.0, temp0=300.0," >> heat1.in;
-echo "/" >> heat1.in;
-echo "Keep protein and ligand fixed" >> heat1.in;
-echo "5.0" >> heat1.in;
-echo "RES $recstart $lignum" >> heat1.in;
-echo "END" >> heat1.in;
-echo "END" >> heat1.in;
-
-if [ -f "heat1.in" ];then
-        echo "heat1.in - Done"
-else
-        echo "heat1.in - Not Done"
-fi
+printf "heat
+ &cntrl
+  imin=0,irest=1,ntx=5,
+  nstlim=100000,dt=0.002,
+  ntc=2,ntf=2,
+  ntt=3, gamma_ln = 0.2, ig = -1,
+  cut=10.0, ntb=1,ntr=1,
+  ntpr=5000, ntwx=5000,
+  ntwr=20000,
+  saltcon=0.15,
+  tempi=150.0, temp0=300.0,
+/
+Keep protein and ligand fixed
+5.0
+RES $recstart $lignum
+END
+END" >> heat1.in;
 
 # Input file for Density Equilibration
 
-if [ -f densi.in ];then
-        rm densi.in
-fi
-
-echo "density" >> densi.in;
-echo " &cntrl" >> densi.in;
-echo "  imin=0,irest=1,ntx=5," >> densi.in;
-echo "  ntc=2,ntf=2," >> densi.in;
-echo "  cut=10.0, ntb=2, ntr=1, nscm=1000," >> densi.in;
-echo "  ntpr=5000, ntwx=5000," >> densi.in;
-echo "  temp0=300.0,ntr=1,ioutfm=1,ntxo=2," >> densi.in;
-echo "  ntp = 1, pres0 = 1.0, taup =2.0," >> densi.in;
-echo "  nstlim = 100000, dt = 0.002," >> densi.in;
-echo "  saltcon=0.15," >> densi.in;
-echo "  ntt=3, gamma_ln = 0.2, ig = -1," >> densi.in;
-echo "/" >> densi.in;
-echo "Keep protein and ligand fixed" >> densi.in;
-echo "5.0" >> densi.in;
-echo "RES $recstart $lignum" >> densi.in;
-echo "END" >> densi.in;
-echo "END" >> densi.in;
-
-
-if [ -f "densi.in" ];then
-        echo "densi.in - Done"
-else
-        echo "densi.in - Not Done"
-fi
+printf "density
+ &cntrl
+  imin=0,irest=1,ntx=5,
+  ntc=2,ntf=2,
+  cut=10.0, ntb=2, ntr=1, nscm=1000,
+  ntpr=5000, ntwx=5000,
+  temp0=300.0,ntr=1,ioutfm=1,ntxo=2,
+  ntp = 1, pres0 = 1.0, taup =2.0,
+  nstlim = 100000, dt = 0.002,
+  saltcon=0.15,
+  ntt=3, gamma_ln = 0.2, ig = -1,
+/
+Keep protein and ligand fixed
+5.0
+RES $recstart $lignum
+END
+END" >> densi.in;
 
 # Input for Overall system equilbration
 
-if [ -f equil.in ];then
-        rm equil.in
-fi
 
-echo "equilibration" >> equil.in;
-echo " &cntrl" >> equil.in;
-echo "  imin=0,irest=1,ntx=5," >> equil.in;
-echo "  nstlim=100000,dt=0.002," >> equil.in;
-echo "  ntc=2,ntf=2,ioutfm=1,ntxo=2," >> equil.in;
-echo "  ntr=1,ntt=3, gamma_ln = 0.2, ig = -1," >> equil.in;
-echo "  cut=10.0, ntb=2, ntp=1, taup=2.0," >> equil.in;
-echo "  ntpr=5000, ntwx=5000,nscm=1000" >> equil.in;
-echo "  saltcon=0.15," >> equil.in;
-echo "  temp0=300.0, pres0 = 1.0," >> equil.in;
-echo "/" >> equil.in;
-echo "Keep protein and ligand fixed" >> equil.in;
-echo "2.0" >> equil.in;
-echo "RES $recstart $lignum" >> equil.in;
-echo "END" >> equil.in;
-echo "END" >> equil.in;
-
-if [ -f "equil.in" ];then
-        echo "equil.in - Done"
-else
-        echo "equil.in - Not Done"
-fi
+printf "equilibration
+ &cntrl
+  imin=0,irest=1,ntx=5,
+  nstlim=100000,dt=0.002,
+  ntc=2,ntf=2,ioutfm=1,ntxo=2,
+  ntr=1,ntt=3, gamma_ln = 0.2, ig = -1,
+  cut=10.0, ntb=2, ntp=1, taup=2.0,
+  ntpr=5000, ntwx=5000,nscm=1000
+  saltcon=0.15,
+  temp0=300.0, pres0 = 1.0,
+/
+Keep protein and ligand fixed
+2.0
+RES $recstart $lignum
+END
+END" >> equil.in;
 
 # Input for second stage of Overall system equilibration
-
-if [ -f equil1.in ];then
-        rm equil1.in
-fi
-
-echo "equilibration" >> equil1.in;
-echo " &cntrl" >> equil1.in;
-echo "  imin=0,irest=1,ntx=5," >> equil1.in;
-echo "  nstlim=50000, dt=0.002," >> equil1.in;
-echo "  ntc=2,ntf=2,ioutfm=1,ntxo=2," >> equil1.in;
-echo "  ntr=0,ntt=3, gamma_ln = 0.2, ig = -1," >> equil1.in;
-echo "  cut=10.0, ntb=2, ntp=1, taup=2.0," >> equil1.in;
-echo "  ntpr=5000, ntwx=5000,nscm=1000" >> equil1.in;
-echo "  saltcon=0.15," >> equil1.in;
-echo "  temp0=300.0, pres0 = 1.0," >> equil1.in;
-echo "/" >> equil1.in;
-echo "END" >> equil1.in;
-echo "END" >> equil1.in;
-
-if [ -f "equil1.in" ];then
-        echo "equil1.in - Done"
-else
-        echo "equil1.in - NotDone"
-fi
+printf "equilibration
+ &cntrl
+  imin=0,irest=1,ntx=5,
+  nstlim=50000, dt=0.002,
+  ntc=2,ntf=2,ioutfm=1,ntxo=2,
+  ntr=0,ntt=3, gamma_ln = 0.2, ig = -1,
+  cut=10.0, ntb=2, ntp=1, taup=2.0,
+  ntpr=5000, ntwx=5000,nscm=1000
+  saltcon=0.15,
+  temp0=300.0, pres0 = 1.0,
+/
+END
+END" >> equil1.in;
 
 # Input for Production Run
 
-if [ -f prod.in ];then
-        rm prod.in
-fi
-
-echo "Production at constant volume and temperature, $1 ns" >> prod.in;
-echo " &cntrl" >> prod.in;
-echo "  imin=0, irest=1, ntx=5," >> prod.in;
-echo "  ntpr=1000, ntwx=1000, ntwr=10000," >> prod.in;
-echo "  ntb=2, ntr=0," >> prod.in;
-echo "  ntp=1, pres0 = 1.0, taup = 2.0," >> prod.in;
-echo "  ntc=2, ntf=2," >> prod.in;
-echo "  cut=10.0, nscm=1000," >> prod.in;
-echo "  nstlim=$ts, dt=0.002," >> prod.in;
-echo "  saltcon=0.15," >> prod.in;
-echo "  temp0=300.0,ntt=3, gamma_ln = 0.2, ig = -1,ioutfm=1,ntxo=2," >> prod.in;
-echo "/" >> prod.in;
-echo "END" >> prod.in;
-echo "END" >> prod.in;
-
-if [ -f "prod.in" ];then
-        echo "prod.in - Done"
-else
-        echo "prod.in - Not Done"
-fi
-
+printf "Production at constant volume and temperature, $1 ns
+ &cntrl
+  imin=0, irest=1, ntx=5,
+  ntpr=1000, ntwx=1000, ntwr=10000,
+  ntb=2, ntr=0,
+  ntp=1, pres0 = 1.0, taup = 2.0,
+  ntc=2, ntf=2,
+  cut=10.0, nscm=1000,
+  nstlim=$ts, dt=0.002,
+  saltcon=0.15,
+  temp0=300.0,ntt=3, gamma_ln = 0.2, ig = -1,ioutfm=1,ntxo=2,
+/
+END
+END" >> prod.in;
 
 # Water Minimization, Heating and Density Equilibration
 
@@ -328,14 +249,14 @@ do
 
 	rm extframe_$ns.in;
 
-	echo "trajin prod1.nc $frame $frame 1" >> extframe_$ns.in;
-	echo "reference com-sol1.inpcrd" >> extframe_$ns.in;
-	echo "center :1-$lignum" >> extframe_$ns.in;
-	echo "autoimage" >> extframe_$ns.in;
-	echo "closest 30 :$lignum first" >> extframe_$ns.in;
-	echo "strip :Na+" >> extframe_$ns.in;
-	echo "strip :Cl-" >> extframe_$ns.in;
-	echo "trajout $dir"_ns_"$ns.pdb" >> extframe_$ns.in;
+	printf "trajin prod1.nc $frame $frame 1
+	reference com-sol1.inpcrd
+	center :1-$lignum
+	autoimage
+	closest 30 :$lignum first
+	strip :Na+
+	strip :Cl-
+	trajout $dir-ns-$ns.pdb" >> extframe_$ns.in;
 
 	cpptraj -p com-sol1.prmtop -i extframe_$ns.in > extframe_$ns.out;
 
@@ -346,8 +267,6 @@ do
 done
 
 mv $dir*.pdb frames_$1/
-
-
 
 
 # Frame calculation
@@ -384,14 +303,14 @@ fi
 mkdir graphs_$1
 
 # Basic Trajectory Analysis
-echo "trajin prod1.nc 0 $frame 1" >> analysis.in;
-echo "reference equil1.rst" >> analysis.in;
-echo "center :1-$lignum" >> analysis.in;
-echo "rms reference out protein-rmsd.agr :1-$recend,@CA,C,N,O" >> analysis.in;
-echo "rms reference out c-alpha-rmsd.agr :1-$recend,@CA" >> analysis.in;
-echo "rms reference out lig-rmsd.agr :$lignum nofit" >> analysis.in;
-echo "atomicfluct out rmsf.agr @C,CA,N byres" >> analysis.in;
-echo "radgyr :1-$recend&!(@H=) out RoG.agr mass nomax" >> analysis.in;
+printf "trajin prod1.nc 0 $frame 1
+reference equil1.rst
+center :1-$lignum
+rms reference out protein-rmsd.agr :1-$recend,@CA,C,N,O
+rms reference out c-alpha-rmsd.agr :1-$recend,@CA
+rms reference out lig-rmsd.agr :$lignum nofit
+atomicfluct out rmsf.agr @C,CA,N byres
+radgyr :1-$recend&!(@H=) out RoG.agr mass nomax" >> analysis.in;
 
 cpptraj -p com-sol1.prmtop -i analysis.in > analysis.out;
 
@@ -401,11 +320,11 @@ echo "Trajectory Analysis - Done";
 
 
 # Conversion of .agr files to .png files
-echo "xmgrace -nxy protein-rmsd.agr -hdevice PNG -hardcopy -printfile protein-rmsd.png" >> conv_agr_png.sh
-echo "xmgrace -nxy c-alpha-rmsd.agr -hdevice PNG -hardcopy -printfile c-alpha-rmsd.png" >> conv_agr_png.sh
-echo "xmgrace -nxy lig-rmsd.agr -hdevice PNG -hardcopy -printfile lig-rmsd.png" >> conv_agr_png.sh
-echo "xmgrace -nxy rmsf.agr -hdevice PNG -hardcopy -printfile rmsf.png" >> conv_agr_png.sh
-echo "xmgrace -nxy RoG.agr -hdevice PNG -hardcopy -printfile RoG.png" >> conv_agr_png.sh
+printf "xmgrace -nxy protein-rmsd.agr -hdevice PNG -hardcopy -printfile protein-rmsd.png
+xmgrace -nxy c-alpha-rmsd.agr -hdevice PNG -hardcopy -printfile c-alpha-rmsd.png
+xmgrace -nxy lig-rmsd.agr -hdevice PNG -hardcopy -printfile lig-rmsd.png
+xmgrace -nxy rmsf.agr -hdevice PNG -hardcopy -printfile rmsf.png
+xmgrace -nxy RoG.agr -hdevice PNG -hardcopy -printfile RoG.png" >> conv_agr_png.sh
 
 sh ./conv_agr_png.sh
 
@@ -438,14 +357,14 @@ fi
 
 mkdir exttraj_$1
 
-echo "trajin prod1.nc 0 $frame 10" >> exttraj_wat.in;
-echo "reference equil1.rst" >> exttraj_wat.in;
-echo "center :1-$lignum" >> exttraj_wat.in;
-echo "autoimage" >> exttraj_wat.in;
-echo "closest 30 :$lignum first" >> exttraj_wat.in;
-echo "strip :Na+" >> exttraj_wat.in;
-echo "strip :Cl-" >> exttraj_wat.in;
-echo "trajout traj_30WAT.pdb pdb append" >> exttraj_wat.in;
+printf "trajin prod1.nc 0 $frame 10
+reference equil1.rst
+center :1-$lignum
+autoimage
+closest 30 :$lignum first
+strip :Na+
+strip :Cl-
+trajout traj_30WAT.pdb pdb append" >> exttraj_wat.in;
 
 cpptraj -p com-sol1.prmtop -i exttraj_wat.in > exttraj_wat.out;
 
@@ -461,11 +380,11 @@ fi
 
 mkdir hbond_$1
 
-echo "trajin prod1.nc 2000 $frame 1" >> hbond.in
-echo "hbond contacts :1-$lignum avgout avg_$dir.dat series uuseries hbond.gnu nointramol" >> hbond.in
-echo "go" >> hbond.in
-echo "lifetime contacts[solutehb] out contacts-lifetime.dat" >> hbond.in
-echo "go" >> hbond.in
+printf "trajin prod1.nc 2000 $frame 1
+hbond contacts :1-$lignum avgout avg_$dir.dat series uuseries hbond.gnu nointramol
+go
+lifetime contacts[solutehb] out contacts-lifetime.dat
+go" >> hbond.in
 
 cpptraj -p com-sol1.prmtop -i hbond.in > hbond.out
 
@@ -525,8 +444,8 @@ s=$((r / k));
 
 # Script to run mmpbsa.py (Only GB decomposition)
 
-echo "#!/bin/sh" >> run_mmpbsa_decomp_gb.sh;
-echo "\$AMBERHOME/bin/MMPBSA.py -O -i mmpbsa_per_res_decomp_gb.in -o FINAL_RESULTS_MMPBSA.dat -do FINAL_DECOMP_MMPBSA.dat -sp ../com-sol1.prmtop -cp ../com.prmtop -rp ../rec.prmtop -lp ../UNK_$ligand/UNK.prmtop -y ../prod1.nc" >> run_mmpbsa_decomp_gb.sh;
+printf "#!/bin/sh
+$AMBERHOME/bin/MMPBSA.py -O -i mmpbsa_per_res_decomp_gb.in -o FINAL_RESULTS_MMPBSA.dat -do FINAL_DECOMP_MMPBSA.dat -sp ../com-sol1.prmtop -cp ../com.prmtop -rp ../rec.prmtop -lp ../UNK_$ligand/UNK.prmtop -y ../prod1.nc" >> run_mmpbsa_decomp_gb.sh;
 
 echo "----------------------------------------------------";
 echo "mmpbsa_per_res_decomp_gb.in - Created";
@@ -586,23 +505,24 @@ fi
 
 # Creating python script for plotting PRED values
 
-echo "import matplotlib.pyplot as plt" >> plot_pred.py
-echo "import pandas as pd" >> plot_pred.py
-echo "" >> plot_pred.py
-echo "data = pd.read_csv('PRED_$dir.csv')" >> plot_pred.py
-echo "" >> plot_pred.py
-echo "df = pd.DataFrame(data)" >> plot_pred.py
-echo "" >> plot_pred.py
-echo "X = list(df.iloc[:, 0])" >> plot_pred.py
-echo "Y = list(df.iloc[:, 1])" >> plot_pred.py
-echo "" >> plot_pred.py
-echo "plt.figure(figsize=(16,10))" >> plot_pred.py
-echo "plt.bar(X, Y, color = 'g')" >> plot_pred.py
-echo "plt.title('PRED - $dir', fontsize = 20)" >> plot_pred.py
-echo "plt.xlabel('Residues')" >> plot_pred.py
-echo "plt.ylabel('Free Energy Contribution (kcal/mol)')" >> plot_pred.py
-echo "plt.savefig('pred_$dir.png',bbox_inches='tight',dpi=150)" >> plot_pred.py
-echo "plt.close()" >> plot_pred.py
+printf "import matplotlib.pyplot as plt
+import pandas as pd
+
+data = pd.read_csv('PRED_$dir.csv')
+
+df = pd.DataFrame(data)
+
+X = list(df.iloc[:, 0])
+Y = list(df.iloc[:, 1])
+
+plt.figure(figsize=(16,10))
+plt.bar(X, Y, color = 'g')
+plt.title('PRED - $dir', fontsize = 20)
+plt.xlabel('Residues')
+plt.ylabel('Free Energy Contribution (kcal/mol)')
+plt.savefig('pred_$dir.png',bbox_inches='tight',dpi=150)
+plt.close()
+" >> plot_pred.py
 
 python3 plot_pred.py
 
