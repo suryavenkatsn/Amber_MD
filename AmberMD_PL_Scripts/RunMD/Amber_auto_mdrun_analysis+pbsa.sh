@@ -249,14 +249,14 @@ do
 
 	rm extframe_$ns.in;
 
-	printf "trajin prod1.nc $frame $frame 1
-	reference com-sol1.inpcrd
-	center :1-$lignum
-	autoimage
-	closest 30 :$lignum first
-	strip :Na+
-	strip :Cl-
-	trajout $dir-ns-$ns.pdb" >> extframe_$ns.in;
+	echo "trajin prod1.nc $frame $frame 1" >> extframe_$ns.in;
+	echo "reference com-sol1.inpcrd" >> extframe_$ns.in;
+	echo "center :1-$lignum" >> extframe_$ns.in;
+	echo "autoimage" >> extframe_$ns.in;
+	echo "closest 30 :$lignum first" >> extframe_$ns.in;
+	echo "strip :Na+" >> extframe_$ns.in;
+	echo "strip :Cl-" >> extframe_$ns.in;
+	echo "trajout $dir-ns-$ns.pdb" >> extframe_$ns.in;
 
 	cpptraj -p com-sol1.prmtop -i extframe_$ns.in > extframe_$ns.out;
 
@@ -357,14 +357,14 @@ fi
 
 mkdir exttraj_$1
 
-printf "trajin prod1.nc 0 $frame 10
-reference equil1.rst
-center :1-$lignum
-autoimage
-closest 30 :$lignum first
-strip :Na+
-strip :Cl-
-trajout traj_30WAT.pdb pdb append" >> exttraj_wat.in;
+echo "trajin prod1.nc 0 $frame 10" >> exttraj_wat.in;
+echo "reference equil1.rst" >> exttraj_wat.in;
+echo "center :1-$lignum" >> exttraj_wat.in;
+echo "autoimage" >> exttraj_wat.in;
+echo "closest 30 :$lignum first" >> exttraj_wat.in;
+echo "strip :Na+" >> exttraj_wat.in;
+echo "strip :Cl-" >> exttraj_wat.in;
+echo "trajout traj_30WAT.pdb pdb append" >> exttraj_wat.in;
 
 cpptraj -p com-sol1.prmtop -i exttraj_wat.in > exttraj_wat.out;
 
