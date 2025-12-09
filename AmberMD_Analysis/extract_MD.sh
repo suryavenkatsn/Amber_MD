@@ -55,6 +55,7 @@ cp */graphs_$1/traj_* compiled_graphs
 # Collect MD optimized poses
 mkdir mdopt
 cp */frames_$1/*_ns_$1.pdb mdopt
+cp */frames_$1/*-ns-$1.pdb mdopt
 
 # Filtered hydrogen bond graphs
 mkdir hbond_all
