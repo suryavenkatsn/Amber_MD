@@ -1,5 +1,11 @@
-xmgrace -nxy protein-rmsd.agr -hdevice PNG -hardcopy -printfile protein-rmsd.png
-xmgrace -nxy c-alpha-rmsd.agr -hdevice PNG -hardcopy -printfile c-alpha-rmsd.png
-xmgrace -nxy lig-rmsd.agr -hdevice PNG -hardcopy -printfile lig-rmsd.png
-xmgrace -nxy rmsf.agr -hdevice PNG -hardcopy -printfile rmsf.png
-xmgrace -nxy RoG.agr -hdevice PNG -hardcopy -printfile RoG.png
+#!/bin/bash
+
+file=$(echo "$1" | awk -F '[.]' '{ print $1 }')
+for file in *.agr; do
+    if [ -f "$file" ]; then
+        echo "Processing file: $file"
+        xmgrace -nxy $file.agr -hdevice PNG -hardcopy -printfile $file.png
+    fi
+done
+
+
