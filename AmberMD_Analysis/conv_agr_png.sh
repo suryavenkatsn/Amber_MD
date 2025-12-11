@@ -1,10 +1,9 @@
 #!/bin/bash
-
-file=$(echo "$1" | awk -F '[.]' '{ print $1 }')
 for file in *.agr; do
     if [ -f "$file" ]; then
         echo "Processing file: $file"
-        xmgrace -nxy $file.agr -hdevice PNG -hardcopy -printfile $file.png
+        fname=$(echo "$file" | awk -F '[.]' '{ print $1 }')
+        xmgrace -nxy $file -hdevice PNG -hardcopy -printfile $fname.png
     fi
 done
 
