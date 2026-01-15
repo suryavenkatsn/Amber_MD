@@ -1,0 +1,15 @@
+parm step5_input.parm7
+trajin step7_production.nc 0 10000
+reference step6.6_equilibration.rst7
+center :1-3100
+
+# Fit all frames on protein backbone
+rms FitProtein :1-3099@CA,C,N
+
+# RMSD matrix for ligand heavy atoms
+rms2d LigandRMSD \
+     :3100&!@H= \
+     out ligand_rmsd_matrix.dat \
+     nofit mass
+
+run
