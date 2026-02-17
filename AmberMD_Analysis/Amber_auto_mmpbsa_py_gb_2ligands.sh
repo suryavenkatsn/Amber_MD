@@ -52,9 +52,8 @@ echo "Trajectory End: $pbsaend";
 echo "Interval: $int";
 echo "----------------------------------------------------";
 
-if [ -f mmpbsa_py_$1 ];then
-	rm -r mmpbsa_py_$1;
-fi
+
+rm -fr mmpbsa_py_$1;
 
 # Input for mmpbsa.py (Only GB decomposition)
 echo "Per-residue GB decomposition" >> mmpbsa_per_res_decomp_gb.in;
@@ -96,17 +95,7 @@ sh ./run_mmpbsa_decomp_gb.sh
 
 cd ../
 
-if [ -f BE_$dir.csv ];then
-	rm BE_$dir.csv;
-fi
-
-if [ -f PRED_$dir.csv ];then
-	rm PRED_$dir.csv;
-fi
-
-if [ -f BE+PRED_$dir.csv ];then
-	rm BE+PRED_$dir.csv;
-fi
+rm -f BE_$dir.csv PRED_$dir.csv BE+PRED_$dir.csv
 
 # Extract Binding energy value from FINAL result
 echo "BindingEnergy Ligand dGbind Std.Err." | awk '{ print $1 "\n" $2 "," $3 "," $4 }' > H_BE_$dir.csv
@@ -128,11 +117,9 @@ d=$(echo "----------------------------------------------------------")
 echo "$dir $d" | awk '{ print $1 "\n" $2 }' > BE+PRED_$dir.csv
 cat H_BE_$dir.csv BE_$dir.csv H_PRED_$dir.csv PRED_$dir.csv >> BE+PRED_$dir.csv
 
-rm temp.csv temp2.csv temp3.csv temp4.csv H_BE_$dir.csv H_PRED_$dir.csv
+rm -f temp.csv temp2.csv temp3.csv temp4.csv H_BE_$dir.csv H_PRED_$dir.csv
 
-if [ -f plot_pred.py ];then
-	rm plot_pred.py;
-fi
+rm -f plot_pred.py
 
 # Creating python script for plotting PRED values
 
@@ -156,13 +143,8 @@ echo "plt.close()" >> plot_pred.py
 
 python3 plot_pred.py
 
-if [ -f dg_$1 ];then
-	rm -r dg_$1;
-	mkdir dg_$1;
-else
-	mkdir dg_$1;
-fi
-
+rm -fr dg_$1;
+mkdir dg_$1;
 
 
 mv pred_$dir.png BE_$dir.csv PRED_$dir.csv BE+PRED_$dir.csv dg_$1/
