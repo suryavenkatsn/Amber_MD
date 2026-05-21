@@ -1,3 +1,3 @@
 cpptraj -i pca.in > pca.out
 
-python pca.py pca.dat PCA pca.png
+python colourmap.py pca.dat PCA pca.png
