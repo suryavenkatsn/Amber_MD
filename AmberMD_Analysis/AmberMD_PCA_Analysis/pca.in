@@ -1,26 +1,20 @@
-parm ../1s2h.prmtop #loading topology
-trajin ../md.nc #loading trajectory
-
+parm ../com-sol1.prmtop
+trajin ../prod-all.nc 0 50000 10
 autoimage anchor @CA
 rms first @N,C,CA
 average @N,C,CA crdset trajaverage
 createcrd trajectory
 run
-#creating covariance matrix and projecting
+# create covariance matrix and projecting the trajectory onto the eigenvectors
 crdaction trajectory rms ref trajaverage @N,C,CA
 crdaction trajectory matrix covar name covmatrix @N,C,CA
-runanalysis diagmatrix covmatrix out evecs.dat vecs 10 name eigenvectors \
-nmwiz nmwizvecs 10 nmwizfile normalmodes.nmd nmwizmask @N,C,CA
-crdaction trajectory projection modes eigenvectors beg 1 end 10 @N,C,CA out \
-pca.dat crdframes 1,4999 #this number changes depending on the number of 
-frames in your system
-quit
+runanalysis diagmatrix covmatrix out evecs.dat vecs 10 name eigenvectors nmwiz nmwizvecs 10 nmwizfile normalmodes.nmd nmwizmask @N,C,CA
+crdaction trajectory projection modes eigenvectors beg 1 end 10 @N,C,CA out pca.dat crdframes 1,5000 #this number changes depending on the number of frames in your system
+#quit
 
 clear all
 readdata evecs.dat name eigenvectors
 parm unboundstrip.top
 parmwrite out modes.prmtop
-runanalysis modes name eigenvectors trajout modes01.nc pcmin -150 pcmax 150 \
-tmode 1 trajoutmask @N,C,CA trajoutfmt netcdf
-#the modes.prmtop can be read in a visualization software to ‘see’ the 
-motions that correspond to each primary component
+runanalysis modes name eigenvectors trajout modes01.nc pcmin -150 pcmax 150 tmode 1 trajoutmask @N,C,CA trajoutfmt netcdf
+#the modes.prmtop can be read in a visualization software to see the motions that correspond to each primary component

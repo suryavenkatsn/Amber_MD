@@ -220,7 +220,7 @@ if [ ! -e prod1.nc ];then
 fi
 
 # Current directory
-dir=$(pwd | grep -o '[^/]*$')
+dir=$(basename "$PWD")
 
 # Residue No. Assignment and timestep calculation
 lignum=$(awk '/UNK/ { print $5;exit; }' com.pdb);
