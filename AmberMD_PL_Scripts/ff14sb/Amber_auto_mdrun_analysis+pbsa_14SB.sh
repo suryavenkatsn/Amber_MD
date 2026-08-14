@@ -32,9 +32,7 @@ echo "----------------INPUT FILES CREATED----------------";
 
 # Input file for Water Minimization
 
-if [ -f watermin.in ];then
-        rm watermin.in
-fi
+rm -f watermin.in;
 
 echo "Minimize all hydrogens" >> watermin.in;
 echo " &cntrl" >> watermin.in;
@@ -51,17 +49,8 @@ echo "RES $recstart $lignum" >> watermin.in;
 echo "END" >> watermin.in;
 echo "END" >> watermin.in;
 
-if [ -f "watermin.in" ];then
-        echo "watermin.in - Done"
-else
-        echo "watermin.in - Not Done"
-fi
-
 # Input file for Overall Minimization
-
-if [ -f min.in ];then
-        rm min.in
-fi
+rm -f min.in;
 
 echo "Unrestrained minimization, periodic system, xmin default" >> min.in;
 echo " &cntrl" >> min.in;
@@ -75,18 +64,8 @@ echo "/" >> min.in;
 echo "END" >> min.in;
 echo "END" >> min.in;
 
-if [ -f "min.in" ];then
-        echo "min.in - Done"
-else
-        echo "min.in - Not Done"
-fi
-
-
 # Input file for Temperature Equilibration
-
-if [ -f heat.in ];then
-        rm heat.in
-fi
+rm -f heat.in;
 
 echo "heat" >> heat.in;
 echo " &cntrl" >> heat.in;
@@ -106,17 +85,8 @@ echo "RES $recstart $lignum" >> heat.in;
 echo "END" >> heat.in;
 echo "END" >> heat.in;
 
-if [ -f "heat.in" ];then
-        echo "heat.in - Done"
-else
-        echo "heat.in - Not Done"
-fi
-
 # Input file for second stage of Temperature Equilibration
-
-if [ -f heat1.in ];then
-        rm heat1.in
-fi
+rm -f heat1.in;
 
 echo "heat" >> heat1.in;
 echo " &cntrl" >> heat1.in;
@@ -136,17 +106,8 @@ echo "RES $recstart $lignum" >> heat1.in;
 echo "END" >> heat1.in;
 echo "END" >> heat1.in;
 
-if [ -f "heat1.in" ];then
-        echo "heat1.in - Done"
-else
-        echo "heat1.in - Not Done"
-fi
-
 # Input file for Density Equilibration
-
-if [ -f densi.in ];then
-        rm densi.in
-fi
+rm -f densi.in;
 
 echo "density" >> densi.in;
 echo " &cntrl" >> densi.in;
@@ -167,17 +128,8 @@ echo "END" >> densi.in;
 echo "END" >> densi.in;
 
 
-if [ -f "densi.in" ];then
-        echo "densi.in - Done"
-else
-        echo "densi.in - Not Done"
-fi
-
 # Input for Overall system equilbration
-
-if [ -f equil.in ];then
-        rm equil.in
-fi
+rm -f equil.in;
 
 echo "equilibration" >> equil.in;
 echo " &cntrl" >> equil.in;
@@ -196,17 +148,9 @@ echo "RES $recstart $lignum" >> equil.in;
 echo "END" >> equil.in;
 echo "END" >> equil.in;
 
-if [ -f "equil.in" ];then
-        echo "equil.in - Done"
-else
-        echo "equil.in - Not Done"
-fi
 
 # Input for second stage of Overall system equilibration
-
-if [ -f equil1.in ];then
-        rm equil1.in
-fi
+rm -f equil1.in;
 
 echo "equilibration" >> equil1.in;
 echo " &cntrl" >> equil1.in;
@@ -222,17 +166,8 @@ echo "/" >> equil1.in;
 echo "END" >> equil1.in;
 echo "END" >> equil1.in;
 
-if [ -f "equil1.in" ];then
-        echo "equil1.in - Done"
-else
-        echo "equil1.in - NotDone"
-fi
-
 # Input for Production Run
-
-if [ -f prod.in ];then
-        rm prod.in
-fi
+rm -f prod.in;
 
 echo "Production at constant volume and temperature, $1 ns" >> prod.in;
 echo " &cntrl" >> prod.in;
@@ -248,12 +183,6 @@ echo "  temp0=300.0,ntt=3, gamma_ln = 0.2, ig = -1,ioutfm=1,ntxo=2," >> prod.in;
 echo "/" >> prod.in;
 echo "END" >> prod.in;
 echo "END" >> prod.in;
-
-if [ -f "prod.in" ];then
-        echo "prod.in - Done"
-else
-        echo "prod.in - Not Done"
-fi
 
 
 # Water Minimization, Heating and Density Equilibration

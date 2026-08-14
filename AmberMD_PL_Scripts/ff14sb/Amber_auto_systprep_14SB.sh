@@ -18,17 +18,10 @@ do
 	esac
 done
 
-if [ -f TotQ_*.txt ];then
-	rm TotQ_*.txt;
-fi 
 
-if [ -f ligprp_*.in ];then
-	rm ligprp_*.in;
-fi 
-
-if [ -f ligprp_*.out ];then
-	rm ligprp_*.out;
-fi 
+rm -f TotQ_*.txt;
+rm -f ligprp_*.in;
+rm -f ligprp_*.out;
 
 if [ ! -f $prt ];then
 	echo "$prt is not found";
@@ -95,67 +88,32 @@ fi
 
 # Protein Preparation
 
-if [ -f prtprp.in ];then
-        rm prtprp.in;
-fi
+rm -f prtprp.in;
+rm -f prtprp.out;
 
-if [ -f prtprp.out ];then
-        rm prtprp.out;
-fi
+echo "source" $AMBERHOME"/dat/leap/cmd/oldff/leaprc.ff14SB" >> prtprp.in;
+echo "source" $AMBERHOME"/dat/leap/cmd/leaprc.zinc" >> prtprp.in;
+echo "source" $AMBERHOME"/dat/leap/cmd/leaprc.gaff" >> prtprp.in;
+echo "pro = loadpdb $prt" >> prtprp.in;
+echo "saveamberparm pro rec.prmtop rec.inpcrd" >> prtprp.in;
+echo "savepdb  pro rec.pdb" >> prtprp.in;
+echo "quit" >> prtprp.in;
 
-if [ -f prtprp_ss.in ];then
-	rm prtprp_ss.in;
-fi
+tleap -f prtprp.in > prtprp.out;
 
-if [ -f prtprp_ss.out ];then
-	rm prtprp_ss.out;
-fi
+echo "**************************************************";
+tail -1 prtprp.out
 
-if [ -f ssbond.in ];then
-	echo "source" $AMBERHOME"/dat/leap/cmd/oldff/leaprc.ff14SB" >> prtprp_ss.in;
-    echo "source" $AMBERHOME"/dat/leap/cmd/leaprc.zinc" >> prtprp_ss.in;
-    echo "source" $AMBERHOME"/dat/leap/cmd/leaprc.gaff" >> prtprp_ss.in;
-    echo "pro = loadpdb $prt" >> prtprp_ss.in;
-    echo "saveamberparm pro rec.prmtop rec.inpcrd" >> prtprp_ss.in;
-    echo "savepdb  pro rec.pdb" >> prtprp_ss.in;
-    echo "quit" >> prtprp_ss.in;
-
-    tleap -f prtprp_ss.in > prtprp_ss.out;
-
-	echo "**************************************************";
-	tail -1 prtprp_ss.out
-
-else
-	echo "source" $AMBERHOME"/dat/leap/cmd/oldff/leaprc.ff14SB" >> prtprp.in;
-	echo "source" $AMBERHOME"/dat/leap/cmd/leaprc.zinc" >> prtprp.in;
-	echo "source" $AMBERHOME"/dat/leap/cmd/leaprc.gaff" >> prtprp.in;
-	echo "pro = loadpdb $prt" >> prtprp.in;
-	echo "saveamberparm pro rec.prmtop rec.inpcrd" >> prtprp.in;
-	echo "savepdb  pro rec.pdb" >> prtprp.in;
-	echo "quit" >> prtprp.in;
-
-	tleap -f prtprp.in > prtprp.out;
-	
-	echo "**************************************************";
-	tail -1 prtprp.out
-fi
 
 echo "--------------------------------------------------";
 echo "Protein Parameterization - Done!";
 echo "**************************************************";
 
 # Complex Preparation
-if [ -f comprp.in ];then
-        rm comprp.in;
-fi
 
-if [ -f comprp.out ];then
-        rm comprp.out;
-fi
-
-if [ -f complex.pdb ];then
-        rm complex.pdb;
-fi
+rm -f comprp.in;
+rm -f comprp.out;
+rm -f complex.pdb;
 
 
 cat rec.pdb | sed '/END/d' > rec1.pdb;
@@ -196,13 +154,8 @@ echo "Ligand No.: $lignum ";
 echo "--------------------------------------------------";
 echo "---------------INPUT FILES CREATED--------------- ";
 
-if [ -f drug.in ];then
-        rm drug.in;
-fi
-
-if [ -f complexmin.in ];then
-        rm complexmin.in;
-fi
+rm -f drug.in;
+rm -f complexmin.in;
 
 # Input file for Ligand Minimization
 echo "Minimize drug coords (drug is resid $ligstart) and xtal water" >> drug.in;
@@ -220,12 +173,6 @@ echo "RES $recstart $recend" >> drug.in;
 echo "END" >> drug.in;
 echo "END" >> drug.in;
 
-if [ -f "drug.in" ];then
-        echo "drug.in - Done"
-else
-        echo "drug.in - Not Done"
-fi
-
 
 # Input file for Complex Minimization
 
@@ -239,11 +186,6 @@ echo "  ntb = 0,cut=16.0," >> complexmin.in
 echo "/" >> complexmin.in;
 echo "END" >> complexmin.in;
 
-if [ -f "complexmin.in" ];then
-        echo "complexmin.in - Done"
-else
-        echo "complexmin.in - Not Done"
-fi
 
 # Running Ligand and Complex Minimization
 
@@ -258,18 +200,9 @@ sander -O -i complexmin.in -o complexmin.out -p com.prmtop -c drug.rst -r comple
 
 # Estimation of charge and volume of system
 
-
-if [ -f solv_c.in ];then
-	rm solv_c.in;
-fi 
-
-if [ -f solv_charge.out ];then
-	rm solv_charge.out;
-fi 
-
-if [ -f complexmin.pdb ];then
-	rm complexmin.pdb;
-fi
+rm -f solv_c.in;
+rm -f solv_charge.out;
+rm -r complexmin.pdb;
 
 $AMBERHOME/bin/./ambpdb -p com.prmtop -c complexmin.rst > complexmin.pdb
 
@@ -299,17 +232,10 @@ ion=$(tail -1 ions.txt)
 nacl=$(tail -1 sc.txt)
 
 # Solvation of the System
-if [ -f solv.in ];then
-        rm solv.in;
-fi
 
-if [ -f solv.out ];then
-        rm solv.out;
-fi
-
-if [ -f complexmin.pdb ];then
-        rm complexmin.pdb;
-fi
+rm -f solv.in;
+rm -f solv.out;
+rm -f complexmin.pdb;
 
 
 $AMBERHOME/bin/./ambpdb -p com.prmtop -c complexmin.rst > complexmin.pdb
