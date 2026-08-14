@@ -14,17 +14,10 @@ fi
 
 dir=$(pwd | grep -o '[^/]*$')
 
-if [ -f BE_$dir.csv ];then
-	rm BE_$dir.csv;
-fi
 
-if [ -f PRED_$dir.csv ];then
-	rm PRED_$dir.csv;
-fi
-
-if [ -f BE+PRED_$dir.csv ];then
-	rm BE+PRED_$dir.csv;
-fi
+rm -f BE_$dir.csv;
+rm -f PRED_$dir.csv;
+rm -f BE+PRED_$dir.csv;
 
 # Extract Binding energy value from FINAL result
 echo "BindingEnergy Ligand dGbind Std.Err." | awk '{ print $1 "\n" $2 "," $3 "," $4 }' > H_BE_$dir.csv
