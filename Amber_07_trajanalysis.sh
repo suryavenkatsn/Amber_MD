@@ -1,7 +1,7 @@
 #!/bin/bash
 if [ ! -n "$1" ];then
 	echo ""
-	echo "Example: $0 20 prod1.nc ligand.mol2"
+	echo "Example: $0 20 prod1.nc"
 	echo ""
 	exit
 fi
@@ -12,8 +12,7 @@ a=500; # Frames per ns
 x=500000;  # Time Steps per ns
 ns=$1;
 ts=$((x * ns));
-tp=$((ts / x));
-trajend=$((tp * a));
+trajend=$((ns * a));
 
 lignum=$(awk '/UNK/ { print $5;exit; }' com.pdb);
 comstart=1
