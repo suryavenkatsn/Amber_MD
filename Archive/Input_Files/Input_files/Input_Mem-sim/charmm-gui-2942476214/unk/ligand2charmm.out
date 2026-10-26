@@ -1,9 +1,0 @@
-Total number of electrons: 202; net charge: 1
-
-Running: /home/charmm-gui/local/amber10/bin/mopac.sh
-
-Running: /home/charmm-gui/local/amber10/bin/am1bcc -i ANTECHAMBER_AM1BCC_PRE.AC -o ANTECHAMBER_AM1BCC.AC -f ac -p /home/charmm-gui/local/amber10/dat/antechamber/BCCPARM.DAT -s 2 -j 1
-
-Running: /home/charmm-gui/local/amber10/bin/atomtype -i ANTECHAMBER_PREP.AC0 -o ANTECHAMBER_PREP.AC -p gaff
-
-Running: /home/charmm-gui/local/amber10/bin/charmmgen -i ANTECHAMBER_PREP.AC -f ac -o unk -r UNK

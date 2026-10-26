@@ -1,1 +1,0 @@
-./shift_membrane.py -i complexmin.pdb -m bilayer_complexmin.pdb -o POPC_amber.pdb

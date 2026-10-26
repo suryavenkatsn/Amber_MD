@@ -1,7 +1,0 @@
-$AMBERHOME/bin/./tleap -f /opt/amber18/dat/leap/cmd/oldff/leaprc.ff99SB
-source /opt/amber18/dat/leap/cmd/leaprc.gaff
-pro = loadpdb 3tyv_prep.pdb
-bond pro.302.SG pro.310.SG
-saveamberparm pro rec.prmtop rec.inpcrdcom
-savepdb  pro rec.pdb
-quit

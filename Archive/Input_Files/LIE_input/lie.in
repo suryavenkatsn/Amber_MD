@@ -1,9 +1,0 @@
-parm complex.prmtop
-trajin complex.mdcrd
-
-# Calculate van der Waals and electrostatic energies
-lie :1-100 :101 out complex_lie.dat
-
-parm ligand.prmtop
-trajin ligand.mdcrd
-lie :1-100 :101 out ligand_lie.dat

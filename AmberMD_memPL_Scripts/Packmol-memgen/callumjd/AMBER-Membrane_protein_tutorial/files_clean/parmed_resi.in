@@ -1,4 +1,0 @@
-parm m2_IXO.prmtop 
-addPDB system_pdb/m2_prep.pdb
-outparm m2_IXO-resiPDB.prmtop
-quit

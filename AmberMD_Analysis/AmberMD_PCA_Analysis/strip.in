@@ -1,8 +1,0 @@
-parm ../com-sol1.prmtop
-trajin ../prod-all.nc 1 1 1
-strip :WAT,Na+,Cl-
-strip !@N,CA,C
-parmwrite out unboundstrip.top
-run
-quit
-

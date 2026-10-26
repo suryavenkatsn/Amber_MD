@@ -1,1 +1,0 @@
-$AMBERHOME/bin/mm_pbsa.pl extract-coord.in > extract_coords.log

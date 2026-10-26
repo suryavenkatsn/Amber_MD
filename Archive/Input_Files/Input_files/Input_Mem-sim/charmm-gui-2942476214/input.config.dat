@@ -1,1 +1,0 @@
-{"systype":"bilayer","dimensions":["73.3871376","73.3871376","127.484","90.0","90.0","90.0"],"input":["amber"],"forcefield":{"type":"amber","files":["leaprc.protein.ff19SB","leaprc.lipid17","leaprc.gaff2","leaprc.water.tip3p"],"custom":[["amber\/ligand\/unk\/UNK.frcmod","parm"],["amber\/ligand\/unk\/UNK.prep","prep"]]},"hmr":false,"ion1264":false,"water":"TIP3P"}

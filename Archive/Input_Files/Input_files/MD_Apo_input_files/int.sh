@@ -1,1 +1,0 @@
-sander -O -i apomin.in -o apomin.out -p rec.prmtop -c rec.inpcrd -r apomin.rst -x apomin.mdcrd -ref rec.inpcrd

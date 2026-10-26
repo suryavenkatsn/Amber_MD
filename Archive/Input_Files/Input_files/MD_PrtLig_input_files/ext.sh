@@ -1,1 +1,0 @@
-pmemd.cuda -O -i prod_ext.in -o prod2.out -p com-sol1.prmtop -c prod1.rst -r prod2.rst -x prod2.nc -ref prod1.rst

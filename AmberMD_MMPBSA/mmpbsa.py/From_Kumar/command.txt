@@ -1,6 +1,0 @@
-$AMBERHOME/bin/ante-MMPBSA.py -p ../com-sol1.prmtop -c complex1.prmtop -r recep1.prmtop -l ligand1.prmtop -s ':Cl-,WAT' -n ':475' --radii=mbondi3
-
-$AMBERHOME/bin/MMPBSA.py -O -i mmpbsa_decomp.in -o FINAL_RESULTS_MMPBSA1.dat -do FINAL_DECOMP_MMPBSA1.dat -sp ../com-sol1.prmtop -cp complex1.prmtop -rp recep1.prmtop -lp ligand1.prmtop -y ../prod-small.nc &
-
-
-

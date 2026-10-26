@@ -1,4 +1,0 @@
-parm fxa.prmtop
-trajin prod_30ns.nc
-gist gridspacn 0.5 gridcntr 22.670 28.524 29.551 griddim 48 49 60
-go

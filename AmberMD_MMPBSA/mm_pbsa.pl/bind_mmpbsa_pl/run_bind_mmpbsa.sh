@@ -1,1 +1,0 @@
-$AMBERHOME/bin/mm_pbsa.pl mm_pbsa.in > mm_pbsa.log
