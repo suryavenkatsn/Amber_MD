@@ -64,14 +64,11 @@ quit" > solv_c.in
 
 tleap -f solv_c.in > solv_charge.out
 
-charge=$(awk '/Total unperturbed charge/ { print $4;exit; }' leap.log);
 vol=$(awk '/Volume/ { print $2;exit; }' leap.log);
 
 # Calculation using python
-python3 ions_nacl.py -i $charge > ions.txt
-python3 sc_calcs.py -v $vol > sc.txt
+python3 sc_calcs.py -v ${vol} > sc.txt
 
-ion=$(tail -1 ions.txt)
 nacl=$(tail -1 sc.txt)
 
 $AMBERHOME/bin/./ambpdb -p com.prmtop -c complexmin.rst > complexmin.pdb
@@ -83,8 +80,9 @@ loadoff ./UNK_${ligand}/UNK.lib
 complex = loadpdb complexmin.pdb
 solvatebox complex TIP3PBOX 10.0
 charge complex
-addIons complex $ion 0
-addIonsRand complex Na+ $nacl Cl- $nacl
+addIons complex Na+ 0
+addIons complex Cl- 0
+addIonsRand complex Na+ ${nacl} Cl- ${nacl}
 saveamberparm complex com-sol1.prmtop com-sol1.inpcrd
 savepdb complex com-sol1.pdb
 quit" > solv.in

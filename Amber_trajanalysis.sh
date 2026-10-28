@@ -15,7 +15,6 @@ ts=$((x * ns));
 trajend=$((ns * a));
 
 lignum=$(awk '/UNK/ { print $5;exit; }' com.pdb);
-comstart=1
 comend=$(tail -3 com.pdb | awk '{print $5}')
 
 # Basic Trajectory Analysis
